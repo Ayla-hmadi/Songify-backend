@@ -11,7 +11,7 @@ using Songify.Data;
 namespace Songify.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221211131254_Initial")]
+    [Migration("20221214054406_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

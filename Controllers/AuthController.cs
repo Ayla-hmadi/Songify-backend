@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Songify;
+using Songify.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -14,17 +15,47 @@ namespace JwtWebApiTutorial.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly DataContext _context;
         public static User user = new User();
+        public static List<User> users = new List<User>();
         private readonly IConfiguration _configuration;
         private readonly IUserService _userService;
 
-        public AuthController(IConfiguration configuration, IUserService userService)
+        public AuthController(IConfiguration configuration, IUserService userService, DataContext context)
         {
+            _context = context;
             _configuration = configuration;
             _userService = userService;
         }
 
-        [HttpGet, Authorize]
+    //    [HttpPost]
+    //    public async Task<ActionResult<List<User>>> AddCharacter(User character)
+    //    {
+    //        _context.User.Add(character);
+    //        await _context.SaveChangesAsync();
+
+    //        return Ok(await _context.User.ToListAsync());
+    //    }
+
+    //    [HttpGet]
+    //    public async Task<ActionResult<List<User>>> GetAllCharacters()
+    //    {
+    //        return Ok(await _context.RpgCharacters.ToListAsync());
+    //    }
+
+    //    [HttpGet("{id}")]
+    //    public async Task<ActionResult<User>> GetCharacter(int id)
+    //    {
+    //        var character = await _context.RpgCharacters.FindAsync(id);
+    //        if (character == null)
+    //        {
+    //            return BadRequest("Character not found.");
+    //        }
+    //        return Ok(character);
+    //    }
+    //}
+
+    [HttpGet, Authorize]
         public ActionResult<string> GetMe()
         {
             var userName = _userService.GetMyName();
@@ -40,21 +71,52 @@ namespace JwtWebApiTutorial.Controllers
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
+            users.Add(user);
+            _context.user.Add(user);
+            await _context.SaveChangesAsync();
+
             return Ok(user);
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
-            if (user.Username != request.Username)
+            var validUser = false;
             {
-                return BadRequest("User not found.");
+                validUser = _context.user.Any(user => user.Username == request.Username);
             }
-
-            if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+            if (!validUser)
+            {
+                return BadRequest("User not found or wrong password.");
+            }
+            //FIX THIS PLEASE
+            var validPassword = false;
+            bool checkPassword = false;
+            {
+                validPassword = _context.user.Any(user => checkPassword == VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt));
+            }
+            if (!validPassword)
             {
                 return BadRequest("Wrong password.");
             }
+            //foreach (User user in users) 
+            //{
+            //    if (user.Username == request.Username && VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
+            //    {
+
+            //        break;
+            //    }
+            //}
+
+            //if (checkUsername)
+            //{
+            //    return BadRequest("User not found.");
+            //}
+
+            //if (checkPassword)
+            //{
+            //    return BadRequest("Wrong password.");
+            //}
 
             string token = CreateToken(user);
 

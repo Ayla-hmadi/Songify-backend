@@ -5,11 +5,23 @@ namespace Songify.Data
 { 
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
-        {
+        protected readonly IConfiguration Configuration;
 
+        //public DataContext(IConfiguration configuration)
+        //{
+        //    Configuration = configuration;
+        //}
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            // connect to sqlite database
+            options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+        }
+        public DataContext(DbContextOptions<DataContext> options, IConfiguration configuration) : base(options)
+        {
+            Configuration = configuration;
         }
 
-        public DbSet<User> user => Set<User>();
+    public DbSet<User> user => Set<User>();
     }
 }

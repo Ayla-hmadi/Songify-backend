@@ -1,4 +1,6 @@
-﻿namespace Songify
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Songify
 {
     public class UserDto
     {

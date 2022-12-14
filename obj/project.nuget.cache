@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4K3s+RcQNrAkAC4IVa0ITjc6+t3mztcjnMG8vJAaDV4xfG/imLH8sfCY+QyFujtKA4kRgOm/N/2iQo1/DBWBDA==",
+  "dgSpecHash": "4GK/kKhR2UjHCuwB4k6r4WIFRqy6O/cLGrja40U0anlwAQPr3SOyH4FkUmT9X2I/SY8xoQeTjOpyTU19QNyXfA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\osama\\Desktop\\Fall 2022\\CMPS 278\\Songify\\Songify\\Songify.csproj",
+  "projectFilePath": "C:\\Users\\osama\\OneDrive\\Documents\\GitHub\\NASA_SpaceAppsChallenge2022\\Songify\\Songify.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\osama\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\osama\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
