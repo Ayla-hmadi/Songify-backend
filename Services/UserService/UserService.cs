@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace JwtWebApiTutorial.Services.UserService
+namespace Songify.Services.UserService
 {
     public class UserService : IUserService
     {

@@ -1,15 +1,15 @@
-﻿using JwtWebApiTutorial.Services.UserService;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Songify;
 using Songify.Data;
+using Songify.Services.UserService;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 
-namespace JwtWebApiTutorial.Controllers
+namespace Songify.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -81,25 +81,40 @@ namespace JwtWebApiTutorial.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserDto request)
         {
+            User tempUser = new User();
             var validUser = false;
+            var validPassword = false;
             {
                 validUser = _context.user.Any(user => user.Username == request.Username);
+                if (validUser) 
+                {
+                    foreach(User u in users) 
+                    {
+                        if (u.Username == request.Username && u.PasswordHash != null && u.PasswordSalt != null) 
+                        {
+                            tempUser.Username = u.Username;
+                            tempUser.PasswordHash = u.PasswordHash;
+                            tempUser.PasswordSalt = u.PasswordSalt;
+                        }           
+                    }
+                }
+                validPassword = VerifyPasswordHash(request.Password, tempUser.PasswordHash, tempUser.PasswordSalt);
             }
             if (!validUser)
             {
-                return BadRequest("User not found or wrong password.");
+                return BadRequest("Invalid User.");
             }
-            VerifyPasswordHash(request.Password, users[0].PasswordHash, users[0].PasswordSalt);
+            //VerifyPasswordHash(request.Password, users[0].PasswordHash, users[0].PasswordSalt);
             //FIX THIS PLEASE
-            //var validPassword = false;
-            //bool checkPassword = false;
+
+            //bool checkPassword = true;
             //{
-            //    validPassword = _context.user.Any(user => user.checkPassword == VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt));
+            //    validPassword = _context.user.Any(user => VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt));
             //}
-            //if (!validPassword)
-            //{
-            //    return BadRequest("Wrong password.");
-            //}
+            if (!validPassword)
+            {
+                return BadRequest("Wrong password.");
+            }
             //foreach (User user in users) 
             //{
             //    if (user.Username == request.Username && VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))

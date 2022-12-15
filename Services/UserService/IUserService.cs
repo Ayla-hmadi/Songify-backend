@@ -1,4 +1,4 @@
-﻿namespace JwtWebApiTutorial.Services.UserService
+﻿namespace Songify.Services.UserService
 {
     public interface IUserService
     {

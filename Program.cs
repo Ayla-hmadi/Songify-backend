@@ -4,7 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
-using JwtWebApiTutorial.Services.UserService;
+using Songify.Services.UserService;
 using Songify.Data;
 
 var builder = WebApplication.CreateBuilder(args);
