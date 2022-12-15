@@ -89,16 +89,17 @@ namespace JwtWebApiTutorial.Controllers
             {
                 return BadRequest("User not found or wrong password.");
             }
+            VerifyPasswordHash(request.Password, users[0].PasswordHash, users[0].PasswordSalt);
             //FIX THIS PLEASE
-            var validPassword = false;
-            bool checkPassword = false;
-            {
-                validPassword = _context.user.Any(user => checkPassword == VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt));
-            }
-            if (!validPassword)
-            {
-                return BadRequest("Wrong password.");
-            }
+            //var validPassword = false;
+            //bool checkPassword = false;
+            //{
+            //    validPassword = _context.user.Any(user => user.checkPassword == VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt));
+            //}
+            //if (!validPassword)
+            //{
+            //    return BadRequest("Wrong password.");
+            //}
             //foreach (User user in users) 
             //{
             //    if (user.Username == request.Username && VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
@@ -210,6 +211,7 @@ namespace JwtWebApiTutorial.Controllers
             using (var hmac = new HMACSHA512(passwordSalt))
             {
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                Console.WriteLine(computedHash.SequenceEqual(passwordHash));
                 return computedHash.SequenceEqual(passwordHash);
             }
         }

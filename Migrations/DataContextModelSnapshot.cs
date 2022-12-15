@@ -17,6 +17,17 @@ namespace Songify.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.11");
 
+            modelBuilder.Entity("Songify.Favorites", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("favorites");
+                });
+
             modelBuilder.Entity("Songify.User", b =>
                 {
                     b.Property<string>("Username")
@@ -39,6 +50,9 @@ namespace Songify.Migrations
 
                     b.Property<DateTime>("TokenExpires")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("checkPassword")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Username");
 

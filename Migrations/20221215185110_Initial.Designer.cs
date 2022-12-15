@@ -11,13 +11,24 @@ using Songify.Data;
 namespace Songify.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221214054406_Initial")]
+    [Migration("20221215185110_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.11");
+
+            modelBuilder.Entity("Songify.Favorites", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("favorites");
+                });
 
             modelBuilder.Entity("Songify.User", b =>
                 {
@@ -41,6 +52,9 @@ namespace Songify.Migrations
 
                     b.Property<DateTime>("TokenExpires")
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("checkPassword")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Username");
 

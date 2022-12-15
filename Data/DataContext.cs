@@ -7,11 +7,6 @@ namespace Songify.Data
     {
         protected readonly IConfiguration Configuration;
 
-        //public DataContext(IConfiguration configuration)
-        //{
-        //    Configuration = configuration;
-        //}
-
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // connect to sqlite database
@@ -23,5 +18,6 @@ namespace Songify.Data
         }
 
     public DbSet<User> user => Set<User>();
+    public DbSet<Favorites> favorites => Set<Favorites>();
     }
 }
