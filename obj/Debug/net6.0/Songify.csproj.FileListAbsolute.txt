@@ -168,3 +168,13 @@ C:\Users\osama\OneDrive\Documents\GitHub\NASA_SpaceAppsChallenge2022\Songify\obj
 C:\Users\osama\OneDrive\Documents\GitHub\NASA_SpaceAppsChallenge2022\Songify\obj\Debug\net6.0\Songify.pdb
 C:\Users\osama\OneDrive\Documents\GitHub\NASA_SpaceAppsChallenge2022\Songify\obj\Debug\net6.0\Songify.genruntimeconfig.cache
 C:\Users\osama\OneDrive\Documents\GitHub\NASA_SpaceAppsChallenge2022\Songify\obj\Debug\net6.0\ref\Songify.dll
+C:\Users\moham\source\repos\Songify-backend\obj\Debug\net6.0\Songify.csproj.AssemblyReference.cache
+C:\Users\moham\source\repos\Songify-backend\obj\Debug\net6.0\Songify.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\moham\source\repos\Songify-backend\obj\Debug\net6.0\Songify.AssemblyInfoInputs.cache
+C:\Users\moham\source\repos\Songify-backend\obj\Debug\net6.0\Songify.AssemblyInfo.cs
+C:\Users\moham\source\repos\Songify-backend\obj\Debug\net6.0\Songify.csproj.CoreCompileInputs.cache
+C:\Users\moham\source\repos\Songify-backend\obj\Debug\net6.0\Songify.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\moham\source\repos\Songify-backend\obj\Debug\net6.0\Songify.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\moham\source\repos\Songify-backend\obj\Debug\net6.0\Songify.dll
+C:\Users\moham\source\repos\Songify-backend\obj\Debug\net6.0\refint\Songify.dll
+C:\Users\moham\source\repos\Songify-backend\obj\Debug\net6.0\Songify.pdb

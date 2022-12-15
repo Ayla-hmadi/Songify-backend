@@ -18,6 +18,6 @@ namespace Songify.Data
         }
 
     public DbSet<User> user => Set<User>();
-    public DbSet<Favorites> favorites => Set<Favorites>();
+    public DbSet<Playlist> playlist => Set<Playlist>();
     }
 }

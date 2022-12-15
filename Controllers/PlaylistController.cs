@@ -11,8 +11,8 @@ namespace Songify.Controllers
     public class PlaylistController : ControllerBase
     {
         private readonly DataContext _context;
-        public static Favorites playlist = new Favorites();
-        public static List<Favorites> playlists = new List<Favorites>();
+        public static Playlist playlist = new Playlist();
+        public static List<Playlist> playlists = new List<Playlist>();
         private readonly IConfiguration _configuration;
         private readonly IPlaylistService _playlistService;
 
@@ -31,13 +31,13 @@ namespace Songify.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<User>> Register(Favorites request)
+        public async Task<ActionResult<User>> Register(Playlist request)
         {
             playlist.Id = request.Id;
             playlist.playlist.Add(request.AddSong());
 
             playlists.Add(playlist);
-            _context.favorites.Add(playlist);
+            _context.playlist.Add(playlist);
             await _context.SaveChangesAsync();
 
             return Ok(playlist);

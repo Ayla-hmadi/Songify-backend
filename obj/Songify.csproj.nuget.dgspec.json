@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\osama\\OneDrive\\Documents\\GitHub\\NASA_SpaceAppsChallenge2022\\Songify\\Songify.csproj": {}
+    "C:\\Users\\moham\\source\\repos\\Songify-backend\\Songify.csproj": {}
   },
   "projects": {
-    "C:\\Users\\osama\\OneDrive\\Documents\\GitHub\\NASA_SpaceAppsChallenge2022\\Songify\\Songify.csproj": {
+    "C:\\Users\\moham\\source\\repos\\Songify-backend\\Songify.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\osama\\OneDrive\\Documents\\GitHub\\NASA_SpaceAppsChallenge2022\\Songify\\Songify.csproj",
+        "projectUniqueName": "C:\\Users\\moham\\source\\repos\\Songify-backend\\Songify.csproj",
         "projectName": "Songify",
-        "projectPath": "C:\\Users\\osama\\OneDrive\\Documents\\GitHub\\NASA_SpaceAppsChallenge2022\\Songify\\Songify.csproj",
-        "packagesPath": "C:\\Users\\osama\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\osama\\OneDrive\\Documents\\GitHub\\NASA_SpaceAppsChallenge2022\\Songify\\obj\\",
+        "projectPath": "C:\\Users\\moham\\source\\repos\\Songify-backend\\Songify.csproj",
+        "packagesPath": "C:\\Users\\moham\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\moham\\source\\repos\\Songify-backend\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\osama\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\moham\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -46,7 +42,7 @@
           "dependencies": {
             "EntityFramework": {
               "target": "Package",
-              "version": "[6.4.4, )"
+              "version": "[6.0.1, )"
             },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
@@ -95,7 +91,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -107,7 +104,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
