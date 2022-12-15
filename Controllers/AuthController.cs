@@ -71,11 +71,15 @@ namespace Songify.Controllers
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
 
-            users.Add(user);
-            _context.user.Add(user);
-            await _context.SaveChangesAsync();
+            if (!_context.user.Contains(user))
+            {
+                users.Add(user);
+                _context.user.Add(user);
+                await _context.SaveChangesAsync();
 
-            return Ok(user);
+                return Ok(user);
+            }
+            else return BadRequest("User already exists.");
         }
 
         [HttpPost("login")]
