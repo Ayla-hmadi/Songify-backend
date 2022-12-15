@@ -99,8 +99,8 @@ namespace Songify.Controllers
                             tempUser.PasswordSalt = u.PasswordSalt;
                         }
                     }
-                }
                 validPassword = VerifyPasswordHash(request.Password, tempUser.PasswordHash, tempUser.PasswordSalt);
+                }
             }
             if (!validUser)
             {

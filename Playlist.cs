@@ -11,7 +11,7 @@ namespace Songify
         public string? name { get; set; } 
         [Required]
         public List<int> songs = new List<int>();
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
         [InverseProperty("Playlists")]
         public User User { get; set; }

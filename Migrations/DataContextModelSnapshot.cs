@@ -17,15 +17,25 @@ namespace Songify.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.11");
 
-            modelBuilder.Entity("Songify.Favorites", b =>
+            modelBuilder.Entity("Songify.Playlist", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PlaylistId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.ToTable("favorites");
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("PlaylistId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("playlist");
                 });
 
             modelBuilder.Entity("Songify.User", b =>
@@ -57,6 +67,22 @@ namespace Songify.Migrations
                     b.HasKey("Username");
 
                     b.ToTable("user");
+                });
+
+            modelBuilder.Entity("Songify.Playlist", b =>
+                {
+                    b.HasOne("Songify.User", "User")
+                        .WithMany("Playlists")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Songify.User", b =>
+                {
+                    b.Navigation("Playlists");
                 });
 #pragma warning restore 612, 618
         }
