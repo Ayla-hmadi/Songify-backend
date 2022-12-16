@@ -28,34 +28,7 @@ namespace Songify.Controllers
             _userService = userService;
         }
 
-    //    [HttpPost]
-    //    public async Task<ActionResult<List<User>>> AddCharacter(User character)
-    //    {
-    //        _context.User.Add(character);
-    //        await _context.SaveChangesAsync();
-
-    //        return Ok(await _context.User.ToListAsync());
-    //    }
-
-    //    [HttpGet]
-    //    public async Task<ActionResult<List<User>>> GetAllCharacters()
-    //    {
-    //        return Ok(await _context.RpgCharacters.ToListAsync());
-    //    }
-
-    //    [HttpGet("{id}")]
-    //    public async Task<ActionResult<User>> GetCharacter(int id)
-    //    {
-    //        var character = await _context.RpgCharacters.FindAsync(id);
-    //        if (character == null)
-    //        {
-    //            return BadRequest("Character not found.");
-    //        }
-    //        return Ok(character);
-    //    }
-    //}
-
-    [HttpGet, Authorize]
+        [HttpGet, Authorize]
         public ActionResult<string> GetMe()
         {
             var userName = _userService.GetMyName();
@@ -70,6 +43,10 @@ namespace Songify.Controllers
             user.Username = request.Username;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
+            //user.Token = CreateToken(user);
+
+            var refreshToken = GenerateRefreshToken();
+            SetRefreshToken(refreshToken);
 
             if (!_context.user.Contains(user))
             {
@@ -88,64 +65,49 @@ namespace Songify.Controllers
             User tempUser = new User();
             var validUser = false;
             var validPassword = false;
+            validUser = _context.user.Any(user => user.Username == request.Username);
+
+            if (validUser)
             {
-                validUser = _context.user.Any(user => user.Username == request.Username);
-                //Console.WriteLine(_context.user.Find(request.Username));
-                //Console.WriteLine(_context.user.First().Username);
-                if (validUser)
+                foreach (User u in _context.user)
                 {
-                    foreach (User u in _context.user)
+                    if (u.Username == request.Username && u.PasswordHash != null && u.PasswordSalt != null)
                     {
-                        if (u.Username == request.Username && u.PasswordHash != null && u.PasswordSalt != null)
-                        {
-                            tempUser.Username = u.Username;
-                            tempUser.PasswordHash = u.PasswordHash;
-                            tempUser.PasswordSalt = u.PasswordSalt;
-                        }
+                        tempUser.Username = u.Username;
+                        tempUser.PasswordHash = u.PasswordHash;
+                        tempUser.PasswordSalt = u.PasswordSalt;
+                        tempUser.TokenCreated = u.TokenCreated;
+                        tempUser.TokenExpires = u.TokenExpires;
+                        tempUser.RefreshToken = u.RefreshToken;
                     }
+                }
                 validPassword = VerifyPasswordHash(request.Password, tempUser.PasswordHash, tempUser.PasswordSalt);
+                if (validPassword)
+                {
+                    RefreshToken();
+                    var refreshToken = GenerateRefreshToken();
+                    SetRefreshToken(refreshToken);
                 }
             }
             if (!validUser)
             {
                 return BadRequest("Invalid User.");
             }
-            //VerifyPasswordHash(request.Password, users[0].PasswordHash, users[0].PasswordSalt);
-            //FIX THIS PLEASE
-
-            //bool checkPassword = true;
-            //{
-            //    validPassword = _context.user.Any(user => VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt));
-            //}
-            if (!validPassword)
+            else if (!validPassword)
             {
                 return BadRequest("Wrong password.");
             }
-            //foreach (User user in users) 
-            //{
-            //    if (user.Username == request.Username && VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
-            //    {
+            else if (tempUser.TokenExpires < DateTime.Now)
+            {
+                Console.WriteLine(tempUser.TokenExpires);
+                return Unauthorized("User's token has expired.");
+            }
 
-            //        break;
-            //    }
-            //}
+            //string token = CreateToken(user);
 
-            //if (checkUsername)
-            //{
-            //    return BadRequest("User not found.");
-            //}
 
-            //if (checkPassword)
-            //{
-            //    return BadRequest("Wrong password.");
-            //}
 
-            string token = CreateToken(user);
-
-            var refreshToken = GenerateRefreshToken();
-            SetRefreshToken(refreshToken);
-
-            return Ok(token);
+            else return Ok("Authorized User");
         }
 
         [HttpPost("refresh-token")]
@@ -157,7 +119,7 @@ namespace Songify.Controllers
             {
                 return Unauthorized("Invalid Refresh Token.");
             }
-            else if(user.TokenExpires < DateTime.Now)
+            else if (user.TokenExpires < DateTime.Now)
             {
                 return Unauthorized("Token expired.");
             }
@@ -174,7 +136,7 @@ namespace Songify.Controllers
             var refreshToken = new RefreshToken
             {
                 Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
-                Expires = DateTime.Now.AddDays(7),
+                Expires = DateTime.Now.AddMinutes(5),
                 Created = DateTime.Now
             };
 
