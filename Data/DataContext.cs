@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 
-namespace Songify.Data 
-{ 
+namespace Songify.Data
+{
     public class DataContext : DbContext
     {
         protected readonly IConfiguration Configuration;
@@ -17,7 +17,8 @@ namespace Songify.Data
             Configuration = configuration;
         }
 
-    public DbSet<User> user => Set<User>();
-    public DbSet<Playlist> playlist => Set<Playlist>();
+        public DbSet<User> user => Set<User>();
+        public DbSet<Playlist> playlist => Set<Playlist>();
+        public DbSet<PlaylistSong> playlistSong => Set<PlaylistSong>();
     }
 }

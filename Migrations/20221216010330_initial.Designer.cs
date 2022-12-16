@@ -11,7 +11,7 @@ using Songify.Data;
 namespace Songify.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221215214432_initial")]
+    [Migration("20221216010330_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,6 @@ namespace Songify.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("name")
@@ -35,9 +34,24 @@ namespace Songify.Migrations
 
                     b.HasKey("PlaylistId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("playlist");
+                });
+
+            modelBuilder.Entity("Songify.PlaylistSong", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PlaylistId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("songId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("playlistSong");
                 });
 
             modelBuilder.Entity("Songify.User", b =>
@@ -69,22 +83,6 @@ namespace Songify.Migrations
                     b.HasKey("Username");
 
                     b.ToTable("user");
-                });
-
-            modelBuilder.Entity("Songify.Playlist", b =>
-                {
-                    b.HasOne("Songify.User", "User")
-                        .WithMany("Playlists")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Songify.User", b =>
-                {
-                    b.Navigation("Playlists");
                 });
 #pragma warning restore 612, 618
         }

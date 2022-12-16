@@ -13,8 +13,6 @@ namespace Songify
         public bool checkPassword { get; set; } = false;
         public DateTime TokenCreated { get; set; }
         public DateTime TokenExpires { get; set; }
-        [InverseProperty("User")]
-        public ICollection<Playlist> Playlists { get; set;}
 
     }
 }
